@@ -1,0 +1,114 @@
+<div ng-controller='homeController'>
+	<style>
+	.navbar {
+		background-color: #222222;
+		margin: 0px;
+		padding: 0px;
+	}
+	a{
+		color: white;
+	}
+	.brand{
+		margin: 0px;
+		width: 50px;
+	}
+	.atag {
+		margin: 0px;
+	}
+	body{
+		margin: 0px;
+		background-color: #ffffff;
+	}
+	img{
+		width: 20px;
+	}
+	span{
+		font-size: 15px;
+	}
+	</style>
+	<script>
+	$('#login').on('shown.bs.modal', function () {
+	  $('#login').focus()
+	})
+	</script>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#" class="atag">
+	        <img alt="Brand" src="./content/vr.jpg" class="brand">
+	      </a>
+	    </div>
+		<ul class="nav navbar-nav navbar-right">
+        <li><a data-toggle="modal" data-target="#login">Login</a></li>
+		<div class="modal fade" id="login">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">Welcome Back</h4>
+		      </div>
+		      <div class="modal-body">
+				  <div class="form-group">
+					<label>Email</label>
+					<p ng-bind='error' style="color: red"></p>
+					<input type="email" class="form-control" id="exampleInputEmail1" ng-model='login.email'>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">Password</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model='login.password'>
+				  </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-black black" ng-click='userLogin()'>Login</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+        <li><a data-toggle="modal" data-target="#register">Register</a></li>
+		<div class="modal fade" id="register">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Join the Fun</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form>
+
+				    <div class="form-group">
+				      <label>First Name</label>
+				      <input type="text" class="form-control" ng-model='register.first'>
+				    </div>
+				    <div class="form-group">
+				      <label>Last Name</label>
+				      <input type="text" class="form-control" ng-model='register.last'>
+				    </div>
+				    <div class="form-group">
+				      <label>Email</label>
+					  <p ng-bind='error' style="color: red"></p>
+				      <input type="email" class="form-control" id="exampleInputEmail1" ng-model='register.email'>
+				    </div>
+				    <div class="form-group">
+				      <label for="exampleInputPassword1">Password</label>
+				      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model='register.password'>
+				    </div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-black black" ng-click='newRegister()'>Join</button>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+      </ul>
+	  </div>
+	</nav>
+	<div class="container">
+		<h1 class="text-center">Ready for a VR Experience</h1>
+		<div class="row">
+			<img src="./content/google_cardboard_logo.png" alt="" class="img"/>
+			<h6>*Google cardboard required</h6>
+	</div>
+</div>

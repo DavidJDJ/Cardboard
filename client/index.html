@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="vr">
+	<head>
+		<meta charset="utf-8">
+		<title>VR</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
+		<script>
+		var vr = angular.module('vr', ['ngRoute']);
+
+		vr.config(function($routeProvider){
+			return $routeProvider
+			.when('/', {
+				templateUrl: './partials/homepage.html'
+			})
+			.otherwise('/', {
+				redirectTo: '/'
+			})
+		})
+
+		vr.factory('mainFactory', function($http){
+			var user;
+			factory = {};
+
+			factory.addUser = function(info, callback){
+				console.log('passed the factory', info);
+				$http.post('/user/add', info).success(function(output){
+					callback(output);
+				})
+			}
+			factory.userLogin = function(info, callback){
+				console.log('padded the factory', info);
+				$http.post('/user/login', info).success(function(output){
+					callback(output);
+				})
+			}
+
+			return factory;
+
+		})
+		vr.controller('homeController', function($scope, $location, mainFactory){
+
+			$scope.newRegister = function(){
+				console.log('passed the controller', $scope.register);
+				mainFactory.addUser($scope.register, function(data){
+					if (data.error == true){
+						$scope.error = 'Already a user with the same Email';
+					} else {
+						console.log('Everything went correctly');
+						$scope.success = 'Succesfully create the user';
+					}
+				})
+			}
+			$scope.userLogin = function(){
+				mainFactory.userLogin($scope.login, function(data){
+					if (data.error == true) {
+						console.log('error');
+						$scope.error = 'The password or email is incorrect';
+					} else {
+						mainFactory.user(data._id, function(){
+							$location.path('/home');
+						})
+					}
+				})
+			}
+
+		})
+		</script>
+	</head>
+	<body ng-view=''>
+
+	</body>
+</html>
