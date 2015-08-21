@@ -1,31 +1,80 @@
 <div ng-controller='homeController'>
 	<style>
-	.navbar {
-		background-color: #222222;
-		margin: 0px;
-		padding: 0px;
-	}
-	a{
-		color: white;
-	}
-	.brand{
-		margin: 0px;
-		width: 50px;
-	}
-	.atag {
-		margin: 0px;
-	}
-	body{
-		margin: 0px;
-		background-color: #ffffff;
-	}
-	img{
-		width: 20px;
-	}
-	span{
-		font-size: 15px;
-	}
+		.navbar {
+			background-color: #222222;
+			margin: 0px;
+			padding: 0px;
+		}
+		a{
+			color: white;
+		}
+		.brand{
+			margin: 0px;
+			width: 50px;
+		}
+		.atag {
+			margin: 0px;
+		}
+
+		body{
+			margin: 0px;
+			background-color: #ffffff;
+		}
+
+		img{
+			width: 20px;
+		}
+
+		span{
+			font-size: 15px;
+		}
+
+		.horse {
+			height: 500px;
+			width: 500px;
+			display: inline-block;
+		}
+
+		.asteroids {
+			height: 500px;
+			width: 500px;
+			display: inline-block;
+		}
+
+		.asteroidClass {
+			height: 500px;
+			width: 500px;
+			display: inline-block;
+			margin-left: 35pt;
+		}
+
+		.horseClass {
+			height: 500px;
+			width: 500px;
+			display: inline-block;
+			margin-left: 25pt;
+		}
+
+		h1 {
+			font-size: 55pt;
+			margin-bottom: 25px;
+		}
+
+		h3 {
+			margin-left: 60px;
+			background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+			background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+			color:transparent;
+			-webkit-background-clip: text;
+			background-clip: text;
+			font-size: 40pt;
+			margin-bottom: 15px;
+			margin-top: 25px;
+
+			}
 	</style>
+
+
 	<script>
 	$('#login').on('shown.bs.modal', function () {
 	  $('#login').focus()
@@ -106,9 +155,33 @@
 	  </div>
 	</nav>
 	<div class="container">
-		<h1 class="text-center">Ready for a VR Experience</h1>
+		<h1 class="text-center">Choose Your Virtual Adventure!</h1>
 		<div class="row">
-			<img src="./content/google_cardboard_logo.png" alt="" class="img"/>
-			<h6>*Google cardboard required</h6>
-	</div>
+<!-- 			<img src="./content/google_cardboard_logo.png" alt="" class="img"/>
+			<h6>*Google cardboard required</h6> -->
+		</div>
+
+		<div class="horseClass">
+			<a href="http://192.168.1.99:8888/horse.html"><img class="horse" src="../../out.gif" alt=""/></a>
+			<h3>Crazy Horse!</h3>
+		</div>
+
+		<div class="asteroidClass">
+			<a href="http://192.168.1.99:8888/asteroids.html"><img class="asteroids" src="../../stars.gif" alt=""/></a>
+			<h3>Save The Earth!</h3>
+		</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

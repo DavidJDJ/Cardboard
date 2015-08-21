@@ -1,0 +1,42 @@
+{
+	"metadata": {
+		"version": 4.3,
+		"type": "Object",
+		"generator": "ObjectExporter"
+	},
+	"geometries": [
+		{
+			"uuid": "17BCBE01-A3B2-46A3-B7B6-E0D9A0481E34",
+			"type": "BoxGeometry",
+			"width": 100,
+			"height": 100,
+			"depth": 100,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		}],
+	"materials": [
+		{
+			"uuid": "C725D1BD-385A-4630-BE25-DDCCCC3FFE42",
+			"type": "MeshPhongMaterial",
+			"color": 16777215,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		}],
+	"object": {
+		"uuid": "31517222-A9A7-4EAF-B5F6-60751C0BABA3",
+		"type": "Scene",
+		"name": "Scene",
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "2C4E3227-1414-4B7A-B02E-5F4D025F6415",
+				"type": "Mesh",
+				"name": "Box 1",
+				"geometry": "17BCBE01-A3B2-46A3-B7B6-E0D9A0481E34",
+				"material": "C725D1BD-385A-4630-BE25-DDCCCC3FFE42",
+				"matrix": [10,0,0,0,0,10,0,0,0,0,10,0,0,500,0,1]
+			}]
+	}
+}

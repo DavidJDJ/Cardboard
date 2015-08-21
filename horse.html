@@ -24,10 +24,12 @@
   <script src="js/third-party/threejs/three.js"></script>
   <script src="js/third-party/threejs/StereoEffect.js"></script>
   <script src="js/third-party/threejs/DeviceOrientationControls.js"></script>
+  <script src="js/third-party/threejs/CanvasRenderer.js"></script>
   <script src="js/third-party/threejs/OrbitControls.js"></script>
+  <script src="js/third-party/threejs/Projector.js"></script>
 
   <script>
-    var camera, scene, renderer;
+    var camera, scene, horseMesh, renderer, horseAnimation;
     var effect, controls;
     var element, container;
     var enemies = [];
@@ -62,6 +64,7 @@
         camera.position.y = 100,
         camera.position.z = 00
       );
+
       controls.noZoom = true;
       controls.noPan = true;
 
@@ -81,29 +84,65 @@
       window.addEventListener('deviceorientation', setOrientationControls, true);
 
     //   ======================== THREE js code =======================
-    //   var horse = this.getObjectByName('horse');
-    //     var angle = 0;
-    //     console.log(horse);
-    //
-    //     function update( event ) {
-    //
-    //     	horse.position.x = Math.cos(angle)* 450;
-    //     	horse.position.z = Math.sin(angle)* 450;
-    //
-    //     	horse.rotation.y -= 0.0999;
-    //
-    //     	angle += 0.1;
-    //
-    //     }
+    // var horse = this.getObjectByName('horse');
+    //   var angle = 0;
+    //   console.log(horse);
+  
+    //   function update( event ) {
+  
+    //   	horse.position.x = Math.cos(angle)* 450;
+    //   	horse.position.z = Math.sin(angle)* 450;
+    //   	horse.rotation.y -= 0.0999;
+  
+    //   	angle += 0.1;
+  
+    //   }
 
     var loader = new THREE.ObjectLoader();
 
-    loader.load('horse1.json', function(object){
+    loader.load('scene6.json', function(object){
       scene.add(object);
-    })
+      horseAnimation = new THREE.Animation( object );
+      horseAnimation.play();
+    });
 
     console.log(scene);
 
+
+
+
+    var horseLoader = new THREE.JSONLoader( true );
+    horseLoader.load( "horse.json", function ( geometry ) {
+
+          horseMesh = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 0x606060, morphTargets: true, overdraw: 0.5 } ) );
+
+          horseMesh.scale.set( 1.5, 1.5, 1.5 );
+          scene.add( horseMesh );
+
+          horse1 = scene.children[1];
+          console.log(horse1);
+
+          var angle = 0;
+      
+          function update( event ) {
+      
+           horse1.position.x = Math.cos(angle)* 450;
+           horse1.position.z = Math.sin(angle)* 450;
+           horse1.rotation.y -= 0.0999;
+      
+           angle += 0.1;
+      
+          }
+
+          // horseAnimation = new THREE.MorphAnimation( horseMesh );
+          // horseAnimation.play();
+
+        } );
+
+
+
+
+    
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);

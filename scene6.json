@@ -1,0 +1,156 @@
+{
+	"metadata": {
+		"version": 4.3,
+		"type": "Object",
+		"generator": "ObjectExporter"
+	},
+	"geometries": [
+		{
+			"uuid": "8F3C526B-B627-4ED5-8FFC-6B1E7C044BDC",
+			"type": "BoxGeometry",
+			"width": 100,
+			"height": 100,
+			"depth": 100,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		},
+		{
+			"uuid": "866BB41B-4317-4B8C-A1F9-3C08C9C18F73",
+			"type": "PlaneGeometry",
+			"width": 200,
+			"height": 200,
+			"widthSegments": 1,
+			"heightSegments": 1
+		},
+		{
+			"uuid": "C55FF647-56D3-45D3-BE18-BECCFFC2DCFE",
+			"type": "CylinderGeometry",
+			"radiusTop": 20,
+			"radiusBottom": 20,
+			"height": 100,
+			"radialSegments": 32,
+			"heightSegments": 1,
+			"openEnded": false
+		},
+		{
+			"uuid": "DFF36EDB-C3BC-4D4F-8140-8C80F86C096A",
+			"type": "CylinderGeometry",
+			"radiusTop": 20,
+			"radiusBottom": 20,
+			"height": 100,
+			"radialSegments": 32,
+			"heightSegments": 1,
+			"openEnded": false
+		},
+		{
+			"uuid": "16B35961-82EF-4957-8BAB-69E0DB009746",
+			"type": "CylinderGeometry",
+			"radiusTop": 20,
+			"radiusBottom": 20,
+			"height": 100,
+			"radialSegments": 32,
+			"heightSegments": 1,
+			"openEnded": false
+		}],
+	"materials": [
+		{
+			"uuid": "4CBDD195-AABF-4B22-87AC-689F2AD45134",
+			"type": "MeshDepthMaterial"
+		},
+		{
+			"uuid": "9BCAA85E-BFA3-4AE9-8359-D38CB8FFF205",
+			"type": "MeshPhongMaterial",
+			"color": 11172162,
+			"emissive": 0,
+			"specular": 0,
+			"shininess": -2
+		},
+		{
+			"uuid": "B8C3567E-75FA-4303-B0FF-A2A7D060CFDB",
+			"type": "MeshPhongMaterial",
+			"color": 16738179,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		},
+		{
+			"uuid": "619391DB-15A9-47EE-BB75-681A473B5883",
+			"type": "MeshPhongMaterial",
+			"color": 2529953,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		},
+		{
+			"uuid": "3020E449-0D92-4528-9428-47B684977254",
+			"type": "MeshPhongMaterial",
+			"color": 63744,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30
+		}],
+	"object": {
+		"uuid": "31517222-A9A7-4EAF-B5F6-60751C0BABA3",
+		"type": "Scene",
+		"name": "Scene",
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "8234684B-0687-493B-A73D-173DD7BC9DCF",
+				"type": "Mesh",
+				"name": "Box 1",
+				"geometry": "8F3C526B-B627-4ED5-8FFC-6B1E7C044BDC",
+				"material": "4CBDD195-AABF-4B22-87AC-689F2AD45134",
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+			},
+			{
+				"uuid": "31136F95-0F5C-4997-BA65-9FF7A2CFA641",
+				"type": "DirectionalLight",
+				"name": "Light 1",
+				"color": 16777215,
+				"intensity": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,2.6033315658569336,444.75042724609375,-227.45684814453125,1]
+			},
+			{
+				"uuid": "27AE0437-2131-4AEF-985F-97B5805C8534",
+				"type": "DirectionalLight",
+				"name": "Light 2",
+				"color": 16777215,
+				"intensity": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-2.3673806190490723,221.25213623046875,267.66253662109375,1]
+			},
+			{
+				"uuid": "D0FB11FF-FA8F-4C12-9AC5-76465DA9D75F",
+				"type": "Mesh",
+				"name": "Ground",
+				"geometry": "866BB41B-4317-4B8C-A1F9-3C08C9C18F73",
+				"material": "9BCAA85E-BFA3-4AE9-8359-D38CB8FFF205",
+				"matrix": [5,0,0,0,0,-0.04601693153381348,-4.999788284301758,0,0,0.9999576210975647,-0.00920338649302721,0,0,0,0,1]
+			},
+			{
+				"uuid": "F201CF88-313B-44E8-9607-5F0E527B85A4",
+				"type": "Mesh",
+				"name": "Cactus 1",
+				"geometry": "C55FF647-56D3-45D3-BE18-BECCFFC2DCFE",
+				"material": "B8C3567E-75FA-4303-B0FF-A2A7D060CFDB",
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,49.262393951416016,-296.30126953125,1]
+			},
+			{
+				"uuid": "9C7D87EB-C8D7-4D62-8D2F-8FF01A4D5EB1",
+				"type": "Mesh",
+				"name": "Cactus 2",
+				"geometry": "DFF36EDB-C3BC-4D4F-8140-8C80F86C096A",
+				"material": "619391DB-15A9-47EE-BB75-681A473B5883",
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,190.0218963623047,23.102767944335938,227.30056762695312,1]
+			},
+			{
+				"uuid": "0C04FE92-65A2-4379-99D9-EB25E0FF0B47",
+				"type": "Mesh",
+				"name": "Cactus 3",
+				"geometry": "16B35961-82EF-4957-8BAB-69E0DB009746",
+				"material": "3020E449-0D92-4528-9428-47B684977254",
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-231.17092895507812,15.060140609741211,92.70437622070312,1]
+			}]
+	}
+}

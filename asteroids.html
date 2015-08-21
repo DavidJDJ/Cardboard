@@ -25,219 +25,237 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.min.js"></script>
-  <script src="js/third-party/threejs/three.js"></script>
-  <script src="js/third-party/threejs/StereoEffect.js"></script>
-  <script src="js/third-party/threejs/DeviceOrientationControls.js"></script>
-  <script src="js/third-party/threejs/OrbitControls.js"></script>
+    <script src="js/third-party/threejs/three.js"></script>
+    <script src="js/third-party/threejs/StereoEffect.js"></script>
+    <script src="js/third-party/threejs/DeviceOrientationControls.js"></script>
+    <script src="js/third-party/threejs/OrbitControls.js"></script>
 
-  <script>
-    $(document).click(function(){
-        window.location.href = '/';
-    })
-    var camera, scene, renderer;
-    var effect, controls;
-    var element, container;
-    var enemies = [];
-    var enemySpeed = 10;
-    var sphereRadius = 10;
-    var score = 0;
+    <script>
+      $(document).click(function(){
+          window.location.href = '/';
+      })
+      var camera, scene, renderer, mesh;
+      var effect, controls;
+      var element, container;
+      var sky, sunSphere;
+      var enemies = [];
+      var enemySpeed = 10;
+      var sphereRadius = 10;
+      var score = 0;
 
-    var clock = new THREE.Clock();
+      var clock = new THREE.Clock();
 
-    init();
-    animate();
+      init();
+      animate();
 
-    function init() {
-      renderer = new THREE.WebGLRenderer();
-      element = renderer.domElement;
-      container = document.getElementById('example');
-      container.appendChild(element);
+      function init() {
 
-      effect = new THREE.StereoEffect(renderer);
+        renderer = new THREE.WebGLRenderer();
+        element = renderer.domElement;
+        container = document.getElementById('example');
+        container.appendChild(element);
 
-      scene = new THREE.Scene();
+        effect = new THREE.StereoEffect(renderer);
 
-      camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
-      camera.position.set(0, 10, 0);
-      scene.add(camera);
+        scene = new THREE.Scene();
 
-      controls = new THREE.OrbitControls(camera, element);
-      controls.rotateUp(Math.PI / 4);
-      controls.target.set(
-        camera.position.x,
-        camera.position.y,
-        camera.position.z
-      );
-      controls.noZoom = true;
-      controls.noPan = true;
+        camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
+        camera.position.set(0, 10, 0);
+        scene.add(camera);
 
-      function setOrientationControls(e) {
-        if (!e.alpha) {
-          return;
+        controls = new THREE.OrbitControls(camera, element);
+        controls.rotateUp(Math.PI / 4);
+        controls.target.set(
+          camera.position.x,
+          camera.position.y,
+          camera.position.z
+        );
+        controls.noZoom = true;
+        controls.noPan = true;
+
+        function setOrientationControls(e) {
+          if (!e.alpha) {
+            return;
+          }
+
+          controls = new THREE.DeviceOrientationControls(camera, true);
+          controls.connect();
+          controls.update();
+
+          element.addEventListener('click', fullscreen, false);
+
+          window.removeEventListener('deviceorientation', setOrientationControls, true);
+        }
+        window.addEventListener('deviceorientation', setOrientationControls, true);
+
+
+        var geometry = new THREE.SphereGeometry( sphereRadius );
+
+        var texture = THREE.ImageUtils.loadTexture( 'textures/asteroid.jpg' );
+        texture.anisotropy = renderer.getMaxAnisotropy();
+
+        var gemTexture = THREE.ImageUtils.loadTexture( 'textures/green.jpg' );
+        gemTexture.anisotropy = renderer.getMaxAnisotropy();
+
+        var playerTexture = THREE.ImageUtils.loadTexture( 'textures/earth_flat_map.gif' );
+        playerTexture.anisotropy = renderer.getMaxAnisotropy();
+
+        // textures/earth_flat_map.gif
+
+        // textures/crate.gif
+
+        var material = new THREE.MeshBasicMaterial( { map: texture } );
+        var playerMaterial =  new THREE.MeshBasicMaterial( { map: playerTexture } );
+        var gemMaterial =  new THREE.MeshBasicMaterial( { map: gemTexture } );
+
+        mesh = new THREE.Mesh( geometry, gemMaterial);
+
+        var angle = Math.random()*Math.PI*2;
+        mesh.position.x = Math.cos(angle)* 100;
+        mesh.position.z = Math.sin(angle)* 100;
+        mesh.position.y = 0;
+        mesh.name = 'Gem';
+        scene.add(mesh);
+      //   var radius = 10;
+
+        var nBoxes = 50;
+        for (var i = 0; i < nBoxes; i++){
+            mesh = new THREE.Mesh( geometry, material );
+            scene.add( mesh );
+            var angle = Math.random()*Math.PI*2;
+            mesh.position.x = Math.cos(angle)* 100;
+            mesh.position.y = Math.floor(Math.random() * 400) - 200;
+            mesh.position.z = Math.sin(angle)* 100;
+            enemies.push(mesh);
         }
 
-        controls = new THREE.DeviceOrientationControls(camera, true);
-        controls.connect();
-        controls.update();
+        mesh = new THREE.Mesh( geometry, playerMaterial );
+        mesh.position.z = -100;
+        mesh.name = 'Player';
+        camera.add(mesh);
 
-        element.addEventListener('click', fullscreen, false);
+        console.log(scene);
 
-        window.removeEventListener('deviceorientation', setOrientationControls, true);
-      }
-      window.addEventListener('deviceorientation', setOrientationControls, true);
-
-
-      var geometry = new THREE.SphereGeometry( sphereRadius );
-
-      var texture = THREE.ImageUtils.loadTexture( 'textures/earth_flat_map.gif' );
-      texture.anisotropy = renderer.getMaxAnisotropy();
-
-      var gemTexture = THREE.ImageUtils.loadTexture( 'textures/nebula.gif' );
-      gemTexture.anisotropy = renderer.getMaxAnisotropy();
-
-      var playerTexture = THREE.ImageUtils.loadTexture( 'textures/crate.gif' );
-      playerTexture.anisotropy = renderer.getMaxAnisotropy();
-
-      var material = new THREE.MeshBasicMaterial( { map: texture } );
-      var playerMaterial =  new THREE.MeshBasicMaterial( { map: playerTexture } );
-      var gemMaterial =  new THREE.MeshBasicMaterial( { map: gemTexture } );
-
-      mesh = new THREE.Mesh( geometry, gemMaterial);
-      var angle = Math.random()*Math.PI*2;
-      mesh.position.x = Math.cos(angle)* 100;
-      mesh.position.z = Math.sin(angle)* 100;
-      mesh.position.y = 0;
-      mesh.name = 'Gem';
-      scene.add(mesh);
-    //   var radius = 10;
-      var nBoxes = 50;
-      for (var i = 0; i < nBoxes; i++){
-          mesh = new THREE.Mesh( geometry, material );
-          scene.add( mesh );
-          var angle = Math.random()*Math.PI*2;
-          mesh.position.x = Math.cos(angle)* 100;
-          mesh.position.y = Math.floor(Math.random() * 400) - 200;
-          mesh.position.z = Math.sin(angle)* 100;
-          enemies.push(mesh);
+        window.addEventListener('resize', resize, false);
+        setTimeout(resize, 1);
       }
 
-      mesh = new THREE.Mesh( geometry, playerMaterial );
-      mesh.position.z = -100;
-      mesh.name = 'Player';
-      camera.add(mesh);
+      var loader = new THREE.ObjectLoader();
+
+      loader.load('space.json', function(object){
+        scene.add(object);
+        spaceAnimation = new THREE.Animation( object );
+        spaceAnimation.play();
+      });
 
 
+      function resize() {
+        var width = container.offsetWidth;
+        var height = container.offsetHeight;
 
-      console.log(scene);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
 
-      window.addEventListener('resize', resize, false);
-      setTimeout(resize, 1);
-    }
+        renderer.setSize(width, height);
+        effect.setSize(width, height);
+      }
+
+      function update(dt) {
+        resize();
+
+        camera.updateProjectionMatrix();
+
+        controls.update(dt);
+      }
+
+      function render(dt) {
+        effect.render(scene, camera);
+      }
+      // var number = 0;
+
+      function animate(t) {
+        requestAnimationFrame(animate);
+
+          var vector = new THREE.Vector3();
+          vector.setFromMatrixPosition( camera.children[0].matrixWorld );
+
+        // var gem = scene.children[2];
+
+        for (var i = enemies.length; i>0 ; i--) {
+            scene.children[i].rotation.x += 0.5;
+            scene.children[i].rotation.y += 0.1;
+            camera.children[0].rotation.x += 0.0015;
+            camera.children[0].rotation.y += 0.0005;
+            // camera.children[0].rotation.z += 0.005;
+
+            if (scene.children[i+1].position.y < -200) {
+                scene.children[i+1].position.y = 200;
+
+            } else {
+                scene.children[i+1].position.y -= 1;
+                if (scene.children[i].position.distanceTo(vector) < 2 * sphereRadius) {
+                    console.log('collision');
+                    if (i == 1){
+                        var angle = Math.random()*Math.PI*2;
+                        scene.children[1].position.x = Math.cos(angle)* 100;
+                        scene.children[1].position.z = Math.sin(angle)* 100;
+                        scene.children[1].position.y = 0;
+                        score += 1;
+                        document.querySelector('.score').innerHTML = score;
+                        document.querySelector('.scorer').innerHTML = score;
+                    } else {
+                        score = 0;
+                        document.querySelector('.score').innerHTML = score;
+                        document.querySelector('.scorer').innerHTML = score;
+                    }
+                    console.log(score);
+                }
+            }
+        }
 
 
-    function resize() {
-      var width = container.offsetWidth;
-      var height = container.offsetHeight;
-
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-
-      renderer.setSize(width, height);
-      effect.setSize(width, height);
-    }
-
-    function update(dt) {
-      resize();
-
-      camera.updateProjectionMatrix();
-
-      controls.update(dt);
-    }
-
-    function render(dt) {
-      effect.render(scene, camera);
-    }
-    // var number = 0;
-
-    function animate(t) {
-      requestAnimationFrame(animate);
-
-
-        var vector = new THREE.Vector3();
-        vector.setFromMatrixPosition( camera.children[0].matrixWorld );
-
-      var gem = scene.children[2];
-
-      for (var i = enemies.length; i>0 ; i--) {
-          scene.children[i].rotation.x += 0.005;
-          scene.children[i].rotation.y += 0.01;
-          camera.children[0].rotation.x += 0.05;
-
-          if (scene.children[i+1].position.y < -200) {
-              scene.children[i+1].position.y = 200;
-
-          } else {
-              scene.children[i+1].position.y -= 1;
-              if (scene.children[i].position.distanceTo(vector) < 2 * sphereRadius) {
-                  console.log('collision');
-                  if (i == 1){
-                      var angle = Math.random()*Math.PI*2;
-                      scene.children[1].position.x = Math.cos(angle)* 100;
-                      scene.children[1].position.z = Math.sin(angle)* 100;
-                      scene.children[1].position.y = 0;
-                      score += 1;
-                      document.querySelector('.score').innerHTML = score;
-                      document.querySelector('.scorer').innerHTML = score;
-                  } else {
-                      score = 0;
-                      document.querySelector('.score').innerHTML = score;
-                      document.querySelector('.scorer').innerHTML = score;
-                  }
-                  console.log(score);
-              }
-          }
+        update(clock.getDelta());
+        render(clock.getDelta());
       }
 
 
-      update(clock.getDelta());
-      render(clock.getDelta());
-    }
-
-
-    function fullscreen() {
-      if (container.requestFullscreen) {
-        container.requestFullscreen();
-      } else if (container.msRequestFullscreen) {
-        container.msRequestFullscreen();
-      } else if (container.mozRequestFullScreen) {
-        container.mozRequestFullScreen();
-      } else if (container.webkitRequestFullscreen) {
-        container.webkitRequestFullscreen();
+      function fullscreen() {
+        if (container.requestFullscreen) {
+          container.requestFullscreen();
+        } else if (container.msRequestFullscreen) {
+          container.msRequestFullscreen();
+        } else if (container.mozRequestFullScreen) {
+          container.mozRequestFullScreen();
+        } else if (container.webkitRequestFullscreen) {
+          container.webkitRequestFullscreen();
+        }
       }
+    </script>
+    
+    <style>
+    .score, .scorer{
+        display: inline-block;
+        /*text-align: center;*/
+        margin-top: 130px;
+        width: 100px;
     }
-  </script>
-  <style>
-  .score, .scorer{
-      display: inline-block;
-      /*text-align: center;*/
-      margin-top: 130px;
-      width: 100px;
-  }
-  .score {
-      margin-right: 150px;
-  }
-  .scorer{
-      margin-left: 150px;
-  }
-  .center {
-      text-align: center;
-      margin: 0px auto;
-      /*width: 300px;*/
-  }
-  </style>
-  <div class="center">
-      <div class="score text-center">Score</div>
-      <div class="scorer text-center">Score</div>
-  </div>
+    .score {
+        margin-right: 150px;
+    }
+    .scorer{
+        margin-left: 150px;
+    }
+    .center {
+        text-align: center;
+        margin: 0px auto;
+        /*width: 300px;*/
+    }
+    </style>
+
+    
+    <div class="center">
+        <div class="score text-center">Score</div>
+        <div class="scorer text-center">Score</div>
+    </div>
   </body>
 </html>
