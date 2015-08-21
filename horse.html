@@ -21,184 +21,182 @@
   <body>
     <div id="example"></div>
 
-  <script src="js/third-party/threejs/three.js"></script>
-  <script src="js/third-party/threejs/StereoEffect.js"></script>
-  <script src="js/third-party/threejs/DeviceOrientationControls.js"></script>
-  <script src="js/third-party/threejs/CanvasRenderer.js"></script>
-  <script src="js/third-party/threejs/OrbitControls.js"></script>
-  <script src="js/third-party/threejs/Projector.js"></script>
+    <embed name="Horse" src="./HORSEY.mp3" loop="true" hidden="true" autostart="true">
 
-  <script>
-    var camera, scene, horseMesh, renderer, horseAnimation;
-    var effect, controls;
-    var element, container;
-    var enemies = [];
-    var enemySpeed = 10;
-    var horse;
-    var angle;
+    <script src="js/third-party/threejs/three.js"></script>
+    <script src="js/third-party/threejs/StereoEffect.js"></script>
+    <script src="js/third-party/threejs/DeviceOrientationControls.js"></script>
+    <script src="js/third-party/threejs/CanvasRenderer.js"></script>
+    <script src="js/third-party/threejs/OrbitControls.js"></script>
+    <script src="js/third-party/threejs/Projector.js"></script>
 
-    var clock = new THREE.Clock();
+    <script>
+      var camera, scene, horseMesh, renderer, horseAnimation;
+      var effect, controls;
+      var element, container;
+      var enemies = [];
+      var enemySpeed = 10;
+      var horse;
+      var angle;
 
-    init();
-    animate();
+      var clock = new THREE.Clock();
 
-    function init() {
-      renderer = new THREE.WebGLRenderer();
-      element = renderer.domElement;
-      container = document.getElementById('example');
-      container.appendChild(element);
+      init();
+      animate();
 
-      effect = new THREE.StereoEffect(renderer);
+      function init() {
+        renderer = new THREE.WebGLRenderer();
+        element = renderer.domElement;
+        container = document.getElementById('example');
+        container.appendChild(element);
 
-      scene = new THREE.Scene();
+        effect = new THREE.StereoEffect(renderer);
 
-      camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
-      camera.position.set(0, 10, 0);
-      scene.add(camera);
+        scene = new THREE.Scene();
 
-      controls = new THREE.OrbitControls(camera, element);
-      controls.rotateUp(Math.PI / 4);
-      controls.target.set(
-        // camera.rotation.x = -90,
-        camera.position.x = 00,
-        camera.position.y = 100,
-        camera.position.z = 00
-      );
+        camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
+        camera.position.set(0, 10, 0);
+        scene.add(camera);
 
-      controls.noZoom = true;
-      controls.noPan = true;
+        controls = new THREE.OrbitControls(camera, element);
+        controls.rotateUp(Math.PI / 4);
+        controls.target.set(
+          // camera.rotation.x = -90,
+          camera.position.x = 00,
+          camera.position.y = 100,
+          camera.position.z = 00
+        );
 
-      function setOrientationControls(e) {
-        if (!e.alpha) {
-          return;
-        }
+        controls.noZoom = true;
+        controls.noPan = true;
 
-        controls = new THREE.DeviceOrientationControls(camera, true);
-        controls.connect();
-        controls.update();
-
-        element.addEventListener('click', fullscreen, false);
-
-        window.removeEventListener('deviceorientation', setOrientationControls, true);
-      }
-      window.addEventListener('deviceorientation', setOrientationControls, true);
-
-    //   ======================== THREE js code =======================
-    // var horse = this.getObjectByName('horse');
-    //   var angle = 0;
-    //   console.log(horse);
-  
-    //   function update( event ) {
-  
-    //   	horse.position.x = Math.cos(angle)* 450;
-    //   	horse.position.z = Math.sin(angle)* 450;
-    //   	horse.rotation.y -= 0.0999;
-  
-    //   	angle += 0.1;
-  
-    //   }
-
-    var loader = new THREE.ObjectLoader();
-
-    loader.load('scene6.json', function(object){
-      scene.add(object);
-      horseAnimation = new THREE.Animation( object );
-      horseAnimation.play();
-    });
-
-    console.log(scene);
-
-
-
-
-    var horseLoader = new THREE.JSONLoader( true );
-    horseLoader.load( "horse.json", function ( geometry ) {
-
-          horseMesh = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 0x606060, morphTargets: true, overdraw: 0.5 } ) );
-
-          horseMesh.scale.set( 1.5, 1.5, 1.5 );
-          scene.add( horseMesh );
-
-          horse1 = scene.children[1];
-          console.log(horse1);
-
-          var angle = 0;
-      
-          function update( event ) {
-      
-           horse1.position.x = Math.cos(angle)* 450;
-           horse1.position.z = Math.sin(angle)* 450;
-           horse1.rotation.y -= 0.0999;
-      
-           angle += 0.1;
-      
+        function setOrientationControls(e) {
+          if (!e.alpha) {
+            return;
           }
 
-          // horseAnimation = new THREE.MorphAnimation( horseMesh );
-          // horseAnimation.play();
+          controls = new THREE.DeviceOrientationControls(camera, true);
+          controls.connect();
+          controls.update();
 
-        } );
+          element.addEventListener('click', fullscreen, false);
 
+          window.removeEventListener('deviceorientation', setOrientationControls, true);
+        }
+        window.addEventListener('deviceorientation', setOrientationControls, true);
 
-
-
+      //   ======================== THREE js code =======================
+      // var horse = this.getObjectByName('horse');
+      //   var angle = 0;
+      //   console.log(horse);
     
+      //   function update( event ) {
+    
+      //   	horse.position.x = Math.cos(angle)* 450;
+      //   	horse.position.z = Math.sin(angle)* 450;
+      //   	horse.rotation.y -= 0.0999;
+    
+      //   	angle += 0.1;
+    
+      //   }
 
-      window.addEventListener('resize', resize, false);
-      setTimeout(resize, 1);
-    }
+      var loader = new THREE.ObjectLoader();
+
+      loader.load('scene6.json', function(object){
+        scene.add(object);
+        horseAnimation = new THREE.Animation( object );
+        horseAnimation.play();
+      });
+
+      console.log(scene);
 
 
-    function resize() {
-      var width = container.offsetWidth;
-      var height = container.offsetHeight;
 
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
 
-      renderer.setSize(width, height);
-      effect.setSize(width, height);
-    }
+      var horseLoader = new THREE.JSONLoader( true );
+      horseLoader.load( "horse.json", function ( geometry ) {
 
-    function update(dt) {
-      resize();
+            horseMesh = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 0x606060, morphTargets: true, overdraw: 0.5 } ) );
 
-      camera.updateProjectionMatrix();
+            horseMesh.scale.set( 1.5, 1.5, 1.5 );
+            scene.add( horseMesh );
 
-      controls.update(dt);
-    }
+            horse1 = scene.children[1];
+            console.log(horse1);
 
-    function render(dt) {
-      effect.render(scene, camera);
-    }
+            var angle = 0;
+        
+            function update( event ) {
+        
+             horse1.position.x = Math.cos(angle)* 450;
+             horse1.position.z = Math.sin(angle)* 450;
+             horse1.rotation.y -= 0.0999;
+        
+             angle += 0.1;
+        
+            }
 
-    function animate(t) {
-      requestAnimationFrame(animate);
+            // horseAnimation = new THREE.MorphAnimation( horseMesh );
+            // horseAnimation.play();
 
-      horse = scene.children[1].children[0];
+          } );
 
-      horse.position.x = Math.cos(angle)* 450;
-      horse.position.z = Math.sin(angle)* 450;
 
-      horse.rotation.y -= 0.0999;
-
-      angle += 0.1;
-
-      update(clock.getDelta());
-      render(clock.getDelta());
-    }
-
-    function fullscreen() {
-      if (container.requestFullscreen) {
-        container.requestFullscreen();
-      } else if (container.msRequestFullscreen) {
-        container.msRequestFullscreen();
-      } else if (container.mozRequestFullScreen) {
-        container.mozRequestFullScreen();
-      } else if (container.webkitRequestFullscreen) {
-        container.webkitRequestFullscreen();
+        window.addEventListener('resize', resize, false);
+        setTimeout(resize, 1);
       }
-    }
-  </script>
+
+
+      function resize() {
+        var width = container.offsetWidth;
+        var height = container.offsetHeight;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(width, height);
+        effect.setSize(width, height);
+      }
+
+      function update(dt) {
+        resize();
+
+        camera.updateProjectionMatrix();
+
+        controls.update(dt);
+      }
+
+      function render(dt) {
+        effect.render(scene, camera);
+      }
+
+      function animate(t) {
+        requestAnimationFrame(animate);
+
+        horse = scene.children[1].children[0];
+
+        horse.position.x = Math.cos(angle)* 450;
+        horse.position.z = Math.sin(angle)* 450;
+
+        horse.rotation.y -= 0.0999;
+
+        angle += 0.1;
+
+        update(clock.getDelta());
+        render(clock.getDelta());
+      }
+
+      function fullscreen() {
+        if (container.requestFullscreen) {
+          container.requestFullscreen();
+        } else if (container.msRequestFullscreen) {
+          container.msRequestFullscreen();
+        } else if (container.mozRequestFullScreen) {
+          container.mozRequestFullScreen();
+        } else if (container.webkitRequestFullscreen) {
+          container.webkitRequestFullscreen();
+        }
+      }
+    </script>
   </body>
 </html>
